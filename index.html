@@ -1,56 +1,268 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Image Format Converter</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              primary: {
-                DEFAULT: 'hsl(210, 40%, 50%)',
-                light: 'hsl(210, 40%, 60%)',
-                dark: 'hsl(210, 40%, 40%)',
-              },
-              secondary: {
-                DEFAULT: 'hsl(180, 50%, 50%)',
-                light: 'hsl(180, 50%, 60%)',
-                dark: 'hsl(180, 50%, 40%)',
-              },
-            },
-            animation: {
-              'fade-in': 'fadeIn 0.5s ease-in-out',
-            },
-            keyframes: {
-              fadeIn: {
-                '0%': { opacity: '0' },
-                '100%': { opacity: '1' },
-              },
-            },
-          },
-        },
-      }
-    </script>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.5",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>JPG ↔ PNG ↔ WEBP Converter — Multi-Tool</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Fast client-side JPG, PNG and WEBP image converter. Drag & drop, convert in-browser using Canvas API. No upload required." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%232f80ed'/%3E%3Ctext x='50' y='57' font-size='46' text-anchor='middle' fill='white' font-family='Arial'%3E%3C/tspan%3E%3C/text%3E%3C/svg%3E" />
 </head>
-  <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
-    <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="JPG PNG WEBP Converter">
+        <!-- simple inline logo -->
+        <svg class="logo" width="40" height="40" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect width="24" height="24" rx="4" fill="currentColor"></rect>
+          <path d="M6 8h12v2H6zM6 12h12v2H6z" fill="#fff" opacity="0.95"></path>
+        </svg>
+        <span class="brand-text">Image Multi-Converter</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="disclaimer.html">Disclaimer</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="theme-toggle" class="btn icon-btn" aria-pressed="false" title="Toggle dark / light">
+          <span class="sun" aria-hidden="true">☀️</span>
+          <span class="moon" aria-hidden="true">🌑</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <h1>JPG to PNG Converter, PNG to JPG, PNG to WEBP, WEBP to JPG</h1>
+          <p class="lead">Convert images right in your browser. No uploads, fast conversions using the Canvas API — secure, private, and instant.</p>
+          <div class="cta-row">
+            <a href="#tools" class="btn primary">Try the converters</a>
+            <a href="about.html" class="btn ghost">Learn More</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="card floating">
+            <div class="file-preview-sample">
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Crect width='100%25' height='100%25' fill='%23eef6ff'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='20' fill='%236a9be3'%3EClient-side conversions%3C/text%3E%3C/svg%3E" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tools" class="container tools-section">
+      <h2 class="section-title">Image Converters</h2>
+      <p class="section-sub">Four quick converters — drag, drop, preview, convert and download. All conversions happen locally in your browser.</p>
+
+      <div class="tools-grid">
+        <!-- Tool card: JPG -> PNG -->
+        <article class="tool-card" data-tool="jpg-to-png" aria-labelledby="t1">
+          <h3 id="t1">JPG → PNG</h3>
+          <p class="muted">Convert JPEG / JPG images to PNG (lossless).</p>
+
+          <div class="dropzone" tabindex="0" data-accept="image/jpeg,image/jpg" aria-label="Drop a JPG image here or click to upload">
+            <input class="file-input" accept="image/jpeg,image/jpg" type="file" />
+            <div class="drop-inner">
+              <svg class="drop-icon" width="48" height="48" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M12 2L12 14"></path>
+                <path fill="currentColor" d="M6 8l6-6 6 6"></path>
+              </svg>
+              <p>Drop JPG here or click to choose</p>
+            </div>
+          </div>
+
+          <div class="preview-area"></div>
+
+          <div class="tool-actions">
+            <label>PNG Quality
+              <input type="range" min="0" max="1" step="0.01" value="1" data-quality />
+            </label>
+            <button class="btn convert-btn">Convert</button>
+          </div>
+
+          <div class="downloads"></div>
+        </article>
+
+        <!-- Tool card: PNG -> JPG -->
+        <article class="tool-card" data-tool="png-to-jpg" aria-labelledby="t2">
+          <h3 id="t2">PNG → JPG</h3>
+          <p class="muted">Convert PNG images (with transparency) to high-quality JPG. Background fill supported.</p>
+
+          <div class="dropzone" tabindex="0" data-accept="image/png" aria-label="Drop a PNG image here or click to upload">
+            <input class="file-input" accept="image/png" type="file" />
+            <div class="drop-inner">
+              <svg class="drop-icon" width="48" height="48" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M12 2L12 14"></path>
+                <path fill="currentColor" d="M6 8l6-6 6 6"></path>
+              </svg>
+              <p>Drop PNG here or click to choose</p>
+            </div>
+          </div>
+
+          <div class="preview-area"></div>
+
+          <div class="tool-actions">
+            <label>JPEG Quality
+              <input type="range" min="0.1" max="1" step="0.01" value="0.92" data-quality />
+            </label>
+            <label>Background
+              <input type="color" value="#ffffff" data-bg />
+            </label>
+            <button class="btn convert-btn">Convert</button>
+          </div>
+
+          <div class="downloads"></div>
+        </article>
+
+        <!-- Tool card: PNG -> WEBP -->
+        <article class="tool-card" data-tool="png-to-webp" aria-labelledby="t3">
+          <h3 id="t3">PNG → WEBP</h3>
+          <p class="muted">Modern WebP format with optional transparency and adjustable quality.</p>
+
+          <div class="dropzone" tabindex="0" data-accept="image/png" aria-label="Drop a PNG image here or click to upload">
+            <input class="file-input" accept="image/png" type="file" />
+            <div class="drop-inner">
+              <svg class="drop-icon" width="48" height="48" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M12 2L12 14"></path>
+                <path fill="currentColor" d="M6 8l6-6 6 6"></path>
+              </svg>
+              <p>Drop PNG here or click to choose</p>
+            </div>
+          </div>
+
+          <div class="preview-area"></div>
+
+          <div class="tool-actions">
+            <label>WEBP Quality
+              <input type="range" min="0.1" max="1" step="0.01" value="0.9" data-quality />
+            </label>
+            <button class="btn convert-btn">Convert</button>
+          </div>
+
+          <div class="downloads"></div>
+        </article>
+
+        <!-- Tool card: WEBP -> JPG -->
+        <article class="tool-card" data-tool="webp-to-jpg" aria-labelledby="t4">
+          <h3 id="t4">WEBP → JPG</h3>
+          <p class="muted">Convert WebP images to widely-supported JPG format.</p>
+
+          <div class="dropzone" tabindex="0" data-accept="image/webp" aria-label="Drop a WEBP image here or click to upload">
+            <input class="file-input" accept="image/webp" type="file" />
+            <div class="drop-inner">
+              <svg class="drop-icon" width="48" height="48" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M12 2L12 14"></path>
+                <path fill="currentColor" d="M6 8l6-6 6 6"></path>
+              </svg>
+              <p>Drop WEBP here or click to choose</p>
+            </div>
+          </div>
+
+          <div class="preview-area"></div>
+
+          <div class="tool-actions">
+            <label>JPEG Quality
+              <input type="range" min="0.1" max="1" step="0.01" value="0.9" data-quality />
+            </label>
+            <label>Background
+              <input type="color" value="#ffffff" data-bg />
+            </label>
+            <button class="btn convert-btn">Convert</button>
+          </div>
+
+          <div class="downloads"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="faq container">
+      <h2 class="section-title">FAQ</h2>
+      <div class="faq-grid">
+        <details>
+          <summary>Are my images uploaded to a server?</summary>
+          <div class="muted">No. All processing happens locally in your browser via the Canvas API. Nothing is uploaded to any server.</div>
+        </details>
+        <details>
+          <summary>What formats are supported?</summary>
+          <div class="muted">This tool supports JPG/JPEG, PNG and WEBP image formats for conversion between the four offered converters. Some browsers may have limited WebP encoding support; modern browsers work fine.</div>
+        </details>
+        <details>
+          <summary>How is image quality controlled?</summary>
+          <div class="muted">JPEG and WebP quality sliders allow you to balance file size and visual quality. PNG exports are lossless by default.</div>
+        </details>
+        <details>
+          <summary>Can I convert multiple images at once?</summary>
+          <div class="muted">You can drop multiple files into a dropzone; each will be converted individually and provided as downloads.</div>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-col brand-col">
+        <a class="brand" href="index.html">
+          <svg class="logo" width="48" height="48" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <rect width="24" height="24" rx="4" fill="currentColor"></rect>
+            <path d="M6 8h12v2H6zM6 12h12v2H6z" fill="#fff" opacity="0.95"></path>
+          </svg>
+          <div>
+            <strong>Image Multi-Converter</strong>
+            <div class="muted small">Secure & Private</div>
+          </div>
+        </a>
+
+        <div class="social">
+          <a class="social-btn" href="#" aria-label="Twitter" title="Twitter">🐦</a>
+          <a class="social-btn" href="#" aria-label="GitHub" title="GitHub">🐙</a>
+          <a class="social-btn" href="#" aria-label="LinkedIn" title="LinkedIn">🔗</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="#tools">JPG → PNG</a></li>
+          <li><a href="#tools">PNG → JPG</a></li>
+          <li><a href="#tools">PNG → WEBP</a></li>
+          <li><a href="#tools">WEBP → JPG</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="disclaimer.html">Disclaimer</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col newsletter-col">
+        <h4>Contact / Newsletter</h4>
+        <p class="muted">Get updates about new features or contact us directly.</p>
+        <form id="newsletter-form" class="newsletter-form" aria-label="Newsletter form">
+          <input type="email" placeholder="you@example.com" required />
+          <button class="btn small" type="submit">Subscribe</button>
+          <div class="form-note muted small">We won't send spam. This form is client-side demo-only.</div>
+        </form>
+      </div>
+    </div>
+
+    <div class="container copyright">
+      <small>© <span id="year"></span> Image Multi-Converter — All rights reserved.</small>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
