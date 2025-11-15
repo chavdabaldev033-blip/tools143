@@ -5,73 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multi Tool Hub</title>
     <style>
+        /* ---------- Colours ---------- */
+        :root {
+            --bg: #1E1E2F;
+            --text: #EAEAEA;
+            --header-bg: #2B2D42;
+            --accent: #FFD700;
+            --card-bg: #3A3D5B;
+            --card-hover: #FFD700;
+            --btn-hover: #E6C200;
+            --shadow: rgba(255, 215, 0, 0.2);
+        }
+
         body {
-            background-color: #1E1E2F;
-            color: #EAEAEA;
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         header {
-            background-color: #2B2D42;
+            background: var(--header-bg);
             text-align: center;
-            padding: 20px;
+            padding: 2rem 1rem;
         }
 
         h1 {
-            color: #FFD700;
             margin: 0;
+            color: var(--accent);
+            font-size: 2.2rem;
         }
 
         .grid-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            padding: 20px;
+            gap: 1.5rem;
+            padding: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .tool-card {
-            background-color: #3A3D5B;
-            padding: 20px;
+            background: var(--card-bg);
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
-            transition: background-color 0.3s, color 0.3s;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px var(--shadow);
+            transition: background 0.3s, color 0.3s;
         }
 
         .tool-card:hover {
-            background-color: #FFD700;
-            color: #1E1E2F;
+            background: var(--card-hover);
+            color: var(--bg);
         }
 
         .tool-card h2 {
-            margin-top: 0;
-            margin-bottom: 10px;
+            margin: 0 0 0.5rem;
+            font-size: 1.4rem;
         }
 
         .tool-card p {
-            margin-bottom: 15px;
+            margin: 0 0 1rem;
+            line-height: 1.4;
         }
 
         .tool-button {
-            background-color: #FFD700;
-            color: #1E1E2F;
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--accent);
+            color: var(--bg);
             border: none;
-            padding: 10px 20px;
             border-radius: 5px;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s;
-            width: 100%;
-            box-sizing: border-box;
+            transition: background 0.3s;
         }
 
         .tool-button:hover {
-            background-color: #E6C200;
+            background: var(--btn-hover);
         }
 
+        /* ---------- Mobile ---------- */
         @media (max-width: 768px) {
             .grid-container {
                 grid-template-columns: 1fr;
@@ -80,57 +94,75 @@
     </style>
 </head>
 <body>
+
     <header>
         <h1>Multi Tool Hub</h1>
     </header>
+
     <div class="grid-container">
+        <!-- ==== 8 Tool Cards ==== -->
         <div class="tool-card">
             <h2>Image Converter</h2>
-            <p>Convert images between various formats like PNG, JPG, and more with ease.</p>
+            <p>Convert images between PNG, JPG, WEBP, etc.</p>
             <button class="tool-button" data-tool="Image Converter">Launch Tool</button>
         </div>
+
         <div class="tool-card">
             <h2>Image Compressor</h2>
-            <p>Reduce image file sizes while maintaining high quality for faster loading.</p>
+            <p>Reduce file size while keeping quality.</p>
             <button class="tool-button" data-tool="Image Compressor">Launch Tool</button>
         </div>
+
         <div class="tool-card">
             <h2>Image Crop</h2>
-            <p>Crop images to custom dimensions and aspect ratios effortlessly.</p>
+            <p>Crop to any size or aspect ratio.</p>
             <button class="tool-button" data-tool="Image Crop">Launch Tool</button>
         </div>
+
         <div class="tool-card">
             <h2>Video Converter</h2>
-            <p>Convert videos to different formats such as MP4, AVI, and others.</p>
+            <p>Convert videos to MP4, AVI, MOV, etc.</p>
             <button class="tool-button" data-tool="Video Converter">Launch Tool</button>
         </div>
+
         <div class="tool-card">
             <h2>Age Calculator</h2>
-            <p>Calculate precise age from birthdate in years, months, and days.</p>
+            <p>Calculate exact age in years, months, days.</p>
             <button class="tool-button" data-tool="Age Calculator">Launch Tool</button>
         </div>
+
         <div class="tool-card">
             <h2>EMI Calculator</h2>
-            <p>Compute Equated Monthly Installments for loans based on principal, rate, and tenure.</p>
+            <p>Compute loan EMI instantly.</p>
             <button class="tool-button" data-tool="EMI Calculator">Launch Tool</button>
         </div>
+
         <div class="tool-card">
             <h2>SIP Calculator</h2>
-            <p>Estimate returns on Systematic Investment Plans over time with compounding.</p>
+            <p>Estimate SIP returns with compounding.</p>
             <button class="tool-button" data-tool="SIP Calculator">Launch Tool</button>
         </div>
+
         <div class="tool-card">
             <h2>Audio Trim</h2>
-            <p>Trim audio files to specific start and end points quickly and accurately.</p>
+            <p>Trim audio files to desired length.</p>
             <button class="tool-button" data-tool="Audio Trim">Launch Tool</button>
         </div>
     </div>
+
+    <!-- JavaScript placed at the end (or inside DOMContentLoaded) -->
     <script>
-        const buttons = document.querySelectorAll('.tool-button');
-        buttons.forEach(button => {
-            button.addEventListener('click', () => {
-                const toolName = button.dataset.tool;
-                alert(`Redirecting to ${toolName}`);
+        // Wait for the DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.tool-button');
+
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tool = btn.getAttribute('data-tool');
+                    alert(`Redirecting to ${tool}`);
+                    // In a real app you would do:
+                    // window.location.href = `/tools/${tool.toLowerCase().replace(/\s+/g, '-')}`;
+                });
             });
         });
     </script>
