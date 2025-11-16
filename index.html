@@ -1,1 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PDFMind.ai - All-in-One PDF Tools</title>
+  <link rel="stylesheet" href="style.css" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXX"></script>
+</head>
+<body>
+  <header>
+    <h1>PDFMind.ai</h1>
+    <p>Free AI-Powered PDF Tools</p>
+  </header>
 
+  <div class="tools-grid">
+    <div class="tool-card" data-tool="merge">
+      <h3>Merge PDF</h3>
+      <p>Combine multiple PDFs</p>
+    </div>
+    <div class="tool-card" data-tool="split">
+      <h3>Split PDF</h3>
+      <p>Extract pages</p>
+    </div>
+    <div class="tool-card" data-tool="compress">
+      <h3>Compress PDF</h3>
+      <p>Reduce file size</p>
+    </div>
+    <div class="tool-card" data-tool="convert">
+      <h3>Word → PDF</h3>
+      <p>Convert DOCX</p>
+    </div>
+  </div>
+
+  <div id="tool-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2 id="tool-title"></h2>
+      <div id="drop-area">Drop files here</div>
+      <input type="file" id="file-input" multiple />
+      <button id="process-btn">Process</button>
+      <div id="progress" class="progress"><div></div></div>
+      <a id="download-link" style="display:none">Download</a>
+    </div>
+  </div>
+
+  <!-- Adsterra Banner -->
+  <div class="ad-banner">
+    <script type="text/javascript">
+      atOptions = {'key' : 'your-adsterra-key','format' : 'iframe','height' : 90,'width' : 728,'params' :{}};
+    </script>
+    <script type="text/javascript" src="//www.topcreativeformat.com/your-key/invoke.js"></script>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
